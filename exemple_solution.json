@@ -1,0 +1,24 @@
+{
+  "name": "base_solution",
+  "apps": [
+    {
+      "name": "MongoDB",
+      "host": "localhost",
+      "path": "mongodb-linux",
+      "version": "latest",
+      "env": {
+        "PORT": 27018
+      }
+    },
+    {
+      "name": "Resource Manager",
+      "host": "localhost",
+      "path": "resource_manager-linux",
+      "version": "latest",
+      "env": {
+        "MONGO_URL": "mongodb://localhost:27018/official",
+        "PORT": 25566
+      }
+    }
+  ]
+}
