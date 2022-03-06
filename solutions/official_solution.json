@@ -1,5 +1,5 @@
 {
-  "name": "base_solution",
+  "name": "mega_official_server",
   "apps": [
     {
       "name": "MongoDB",
@@ -7,7 +7,8 @@
       "path": "mongodb-linux",
       "version": "latest",
       "env": {
-        "PORT": 27018
+        "PORT": 27017,
+        "STORAGE_PATH": "storage/official/mongodb-linux"
       }
     },
     {
@@ -16,8 +17,11 @@
       "path": "resource_manager-linux",
       "version": "latest",
       "env": {
-        "MONGO_URL": "mongodb://localhost:27018/official",
-        "PORT": 25566
+        "MONGO_URL": "localhost",
+        "MONGO_PORT": 27017,
+        "MONGO_DB": "mega_resources",
+        "PORT": 25565,
+        "STORAGE_PATH": "storage/official/resource_manager-linux"
       }
     }
   ]

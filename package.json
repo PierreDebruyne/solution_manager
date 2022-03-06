@@ -1,5 +1,5 @@
 {
-  "name": "mega_installer",
+  "name": "solution_manager",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -8,14 +8,18 @@
     "start-dev": "babel-node src/index.js",
     "build": "babel src -d dist",
     "start-builded": "babel-node dist/index.js",
-    "build-binaries": "npm run build && pkg ."
+    "build-binaries": "npm run build && pkg . && sh build.sh",
+    "deploy": "sh deploy.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.26.0",
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
     "rimraf": "^3.0.2",
+    "tree-kill": "^1.2.2",
     "unzipper": "^0.10.11"
   },
   "devDependencies": {
