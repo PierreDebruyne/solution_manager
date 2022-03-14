@@ -18,9 +18,9 @@
     "axios": "^0.26.0",
     "body-parser": "^1.19.2",
     "express": "^4.17.3",
-    "rimraf": "^3.0.2",
     "tree-kill": "^1.2.2",
-    "unzipper": "^0.10.11"
+    "js_tools": "github:PierreDebruyne/js_tools.git#main",
+    "resource_manager_controller": "github:PierreDebruyne/resource_manager_controller.git#main"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -3,9 +3,10 @@ import {Solution} from "./solution";
 
 export default class {
 
-    constructor(main_path, start_port) {
+    constructor(main_path, resource_manager_controller) {
         this.main_path = main_path;
-        this.start_port = start_port;
+        this.resource_manager_controller = resource_manager_controller;
+        console.log(this.resource_manager_controller);
         this.storage_dir = this.main_path + '/storage';
         this.bin_dir = this.main_path + '/binaries';
         this.app_dir = this.main_path + '/apps';
@@ -27,11 +28,16 @@ export default class {
     }
 
     async run_solution(config) {
-        let solution = new Solution(config, this.main_path);
+        let solution = new Solution(config, this.main_path, this.resource_manager_controller);
         this.solutions[solution.id] = solution;
-        solution.update();
+        await solution.update();
         await solution.run();
         return solution;
+    }
+
+    async update_solution(config) {
+        let solution = new Solution(config, this.main_path, this.resource_manager_controller);
+        await solution.update();
     }
 
     async stop_solution(solution_id) {

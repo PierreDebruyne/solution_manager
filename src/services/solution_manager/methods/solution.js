@@ -1,28 +1,31 @@
 import {Application} from "./application";
-import {makeid} from "../../tools";
+import {make_id} from "js_tools";
 
 export class Solution {
-    constructor(config, main_path) {
+    constructor(config, main_path, resource_manager_controller) {
         this.main_path = main_path;
+        this.resource_manager_controller = resource_manager_controller;
+        console.log(this.resource_manager_controller);
+
         this.config = config;
-        this.id = "solution_" + makeid(4);
+        this.id = "solution_" + make_id(4);
         this.name = this.config.name || this.id
         this.applications = {};
         if (config.apps) {
             for (let appIndex in config.apps) {
                 let app_config = config.apps[appIndex];
-                let application = new Application(app_config, main_path);
+                let application = new Application(app_config, main_path, this.resource_manager_controller);
                 this.applications[application.id] = application;
             }
         }
     }
 
-    update() {
-        let must_update = this.config.check_for_update || true
+    async update() {
+        let must_update = (this.config.check_for_update === undefined) ? true : this.config.check_for_update
         if (must_update) {
             for (let application_index in this.applications) {
                 let application = this.applications[application_index];
-                application.update();
+                await application.prepare();
             }
         }
     }

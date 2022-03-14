@@ -1,5 +1,6 @@
-import SolutionManager from "./solution_manager";
+import SolutionManager from "./methods/solution_manager";
 import routes from "./routes";
+import {ResourceManagerController} from "resource_manager_controller";
 
 export class Solution_manager_service {
 
@@ -7,7 +8,8 @@ export class Solution_manager_service {
 
     constructor() {
         let storage_path = process.env.STORAGE_PATH || process.cwd();
-        this.solution_manager = new SolutionManager(storage_path)
+        this.resource_manager_controller = new ResourceManagerController("localhost", Number.parseInt(port_start) + 2)
+        this.solution_manager = new SolutionManager(storage_path, this.resource_manager_controller)
     }
 
     async init() {
@@ -35,12 +37,16 @@ export class Solution_manager_service {
                         "MONGO_PORT": Number.parseInt(port_start) + 1,
                         "MONGO_DB": "mega_resources",
                         "PORT": Number.parseInt(port_start) + 2,
+                        "PARENT_URL": "localhost",
+                        "PARENT_PORT": 30002,
                         "DEBUG": debug
                     }
                 }
             ]
         }
-        await this.solution_manager.run_solution(mega_solution)
+        await this.solution_manager.run_solution(mega_solution);
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        await sleep(2000);
     }
 
     routes(app) {
@@ -48,12 +54,57 @@ export class Solution_manager_service {
     }
 
     async created() {
-        let solutions = process.argv.slice(2);
-        await this.solution_manager.run_solutions(solutions);
+        let first_param = process.argv[2];
+        console.log(first_param)
+        if (first_param === 'update') {
+            console.log("Updating...")
+            try {
+                this.auto_update().then(async () => {
+                    await this.stop();
+                    process.exit(0);
+                });
+            } catch (e) {
+                console.log(e.message);
+                await this.stop();
+                process.exit(0);
+            }
+
+        } else {
+            let solutions = process.argv.slice(2);
+            console.log(solutions)
+            await this.solution_manager.run_solutions(solutions);
+        }
     }
 
     async stop() {
         await this.solution_manager.stop();
+    }
+
+    async auto_update() {
+        let mega_solution = {
+            "name": "base",
+            "apps": [
+                {
+                    "name": "Solution Manager",
+                    "host": "localhost",
+                    "path": "solution_manager-linux",
+                    "version": "latest"
+                },
+                {
+                    "name": "MongoDB",
+                    "host": "localhost",
+                    "path": "mongodb-linux",
+                    "version": "latest"
+                },
+                {
+                    "name": "Resource Manager",
+                    "host": "localhost",
+                    "path": "resource_manager-linux",
+                    "version": "latest",
+                }
+            ]
+        }
+        await this.solution_manager.update_solution(mega_solution);
     }
 }
 

@@ -1,6 +1,6 @@
 ##npm run build-binaries
 
-export URL="http://localhost:25565"
+export URL="http://localhost:30002"
 
 export HOST="localhost"
 export TYPE="apps"
@@ -11,3 +11,5 @@ export FILE_PATH="builds/solution_manager-linux.zip"
 node "/home/pierre/Documents/Mega/repos/resource_uploader/src/index.js"
 
 read -p "Press [Enter] key to exit..."
+
+exit 0
