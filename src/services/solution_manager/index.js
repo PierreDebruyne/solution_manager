@@ -58,16 +58,14 @@ export class Solution_manager_service {
         console.log(first_param)
         if (first_param === 'update') {
             console.log("Updating...")
-            try {
                 this.auto_update().then(async () => {
                     await this.stop();
                     process.exit(0);
+                }).catch(async (e) => {
+                    console.log(e.message);
+                    await this.stop();
+                    process.exit(0);
                 });
-            } catch (e) {
-                console.log(e.message);
-                await this.stop();
-                process.exit(0);
-            }
 
         } else {
             let solutions = process.argv.slice(2);
