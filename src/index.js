@@ -1,6 +1,20 @@
 import express from 'express';
 import bodyParser from "body-parser";
 import {Solution_manager_service} from "./services/solution_manager";
+import cors from "cors";
+var corsOptions = {
+    origin: function (origin, callback) {
+        console.log(origin)
+        callback(null, true)
+        /*if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }*/
+    }
+}
+
+
 
 let port_start = process.env.PORT_START || "25000";
 
@@ -24,7 +38,10 @@ let solution_manager_service = new Solution_manager_service();
             return res.status(200).json({}).end();
         });
 
+        app.use(cors(corsOptions));
+
         solution_manager_service.routes(app);
+
 
         app.listen(port_start, async () => {
             console.log('Server ready!')

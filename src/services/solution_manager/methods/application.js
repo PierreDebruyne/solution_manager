@@ -115,7 +115,11 @@ export class Application {
         let env = {
             ...this.config.env,
             STORAGE_PATH: storage_path,
-
+        }
+        for (let env_index in env) {
+            if (env[env_index].constructor == Object) {
+                env[env_index] = JSON.stringify(env[env_index]);
+            }
         }
         console.log(env)
         this.process = spawn("./run.sh", {

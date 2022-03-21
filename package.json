@@ -17,10 +17,11 @@
   "dependencies": {
     "axios": "^0.26.0",
     "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
     "express": "^4.17.3",
-    "tree-kill": "^1.2.2",
     "js_tools": "github:PierreDebruyne/js_tools.git#main",
-    "resource_manager_controller": "github:PierreDebruyne/resource_manager_controller.git#main"
+    "resource_manager_controller": "github:PierreDebruyne/resource_manager_controller.git#main",
+    "tree-kill": "^1.2.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

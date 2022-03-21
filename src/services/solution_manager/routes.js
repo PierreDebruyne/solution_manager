@@ -18,7 +18,7 @@ export default (app, route_path, solution_manager) => {
             }
 
             let solution = await solution_manager.run_solution(solution_config);
-            console.log(    solution)
+            console.log(solution)
             return res.status(200).json(solution.show()).end();
         } catch (e) {
             console.log(e)
