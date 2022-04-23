@@ -106,7 +106,7 @@ export class Application {
 
         this.status.status = "run"
         let app_path = this.main_path + "/apps/" + this.config.path + "_" + this.config.version;
-        const storage_path = (this.config.env.STORAGE_PATH !== undefined) ? (this.main_path + "/" + this.config.env.STORAGE_PATH) : (this.main_path + "/storage/" + this.config.path);
+        const storage_path = (this.config.env.STORAGE_PATH !== undefined) ? (this.config.env.STORAGE_PATH) : (this.main_path + "/storage/" + this.config.path);
         fs.chmodSync(app_path + "/run.sh", 0o755);
         if (!fs.existsSync(storage_path)) {
             fs.mkdirSync(storage_path);

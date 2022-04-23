@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from "body-parser";
 import {Solution_manager_service} from "./services/solution_manager";
 import cors from "cors";
+import config from "./config"
+
 var corsOptions = {
     origin: function (origin, callback) {
         console.log(origin)
@@ -16,7 +18,7 @@ var corsOptions = {
 
 
 
-let port_start = process.env.PORT_START || "25000";
+let port_start = config.PORT_START || "25000";
 
 let solution_manager_service = new Solution_manager_service();
 
@@ -54,9 +56,3 @@ let solution_manager_service = new Solution_manager_service();
             }
         })
     });
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 import SolutionManager from "./methods/solution_manager";
 import routes from "./routes";
 import {ResourceManagerController} from "resource_manager_controller";
+import config from "../../config";
 
 export class Solution_manager_service {
 
@@ -37,8 +38,8 @@ export class Solution_manager_service {
                         "MONGO_PORT": Number.parseInt(port_start) + 1,
                         "MONGO_DB": "mega_resources",
                         "PORT": Number.parseInt(port_start) + 2,
-                        "PARENT_URL": "localhost",
-                        "PARENT_PORT": 30002,
+                        "PARENT_URL": parent_url,
+                        "PARENT_PORT": Number.parseInt(parent_port_start) + 2,
                         "DEBUG": debug
                     }
                 }
@@ -106,5 +107,7 @@ export class Solution_manager_service {
     }
 }
 
-let port_start = process.env.PORT_START || "25000";
-let debug = process.env.DEBUG || false;
+let port_start = config.PORT_START || "25000";
+let debug = config.DEBUG || false;
+let parent_url = config.PARENT_URL || 'localhost';
+let parent_port_start = config.PARENT_PORT_START || '30000';
