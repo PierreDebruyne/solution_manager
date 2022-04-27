@@ -30,7 +30,11 @@ export default class {
     async run_solution(config) {
         let solution = new Solution(config, this.main_path, this.resource_manager_controller);
         this.solutions[solution.id] = solution;
-        await solution.update();
+        try {
+            await solution.update();
+        } catch(e) {
+            console.log(e.message)
+        }
         await solution.run();
         return solution;
     }
